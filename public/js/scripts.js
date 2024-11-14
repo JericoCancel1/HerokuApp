@@ -24,6 +24,9 @@ function uploadImage() {
         fetch('https://ai-api-capstone-64300388693f.herokuapp.com/api/upload', {
             method: 'POST',
             body: formData,
+            headers:{
+                'Accept': 'application/json'
+            }
         })
         .then(response => response.blob())  // Adjust response handling based on your server's response format
         .then(blob => {
