@@ -24,14 +24,12 @@ function uploadImage() {
         fetch('https://ai-api-capstone-64300388693f.herokuapp.com/api/upload', {
             method: 'POST',
             body: formData,
-            headers: {
-                
-            }
         })
-        .then(response => response.json())  // Adjust response handling based on your server's response format
-        .then(data => {
+        .then(response => response.blob())  // Adjust response handling based on your server's response format
+        .then(blob => {
+            const returnedImageURL = URL.createObjectURL(blob);
+            imagePreview.src = returnedImageURL;  // Show returned image in the imagePreview element
             uploadStatus.textContent = 'Image analyzed! Your personalized suggestions are ready.';
-            console.log('Server response:', data);
         })
         .catch(error => {
             uploadStatus.textContent = 'Error uploading the image. Please try again.';
