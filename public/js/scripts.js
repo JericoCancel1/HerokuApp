@@ -21,7 +21,7 @@ function uploadImage() {
         formData.append('image', file);
 
         // Use fetch to send the image
-        fetch('https://ai-api-capstone-64300388693f.herokuapp.com/api/upload', {
+        fetch('https://flask-ai-api-91c1f2095b0f.herokuapp.com/api/upload', {
             method: 'POST',
             body: formData,
             headers:{
