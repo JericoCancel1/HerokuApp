@@ -43,50 +43,6 @@ function uploadImage() {
     }
 }
 
-function getRecommendations() {
-    const colorScheme = document.getElementById('colorScheme').value;
-    const material = document.getElementById('material').value;
-    const style = document.getElementById('style').value;
-
-    const productList = document.getElementById('productList');
-    productList.innerHTML = '';
-
-    const products = [
-        {
-            name: 'Modern Sofa',
-            image: 'https://via.placeholder.com/300x200?text=Modern+Sofa',
-            description: 'A sleek and minimalist modern sofa.',
-            link: 'https://www.ikea.com/us/en/catalog/products/sofa-modern'
-        },
-        {
-            name: 'Abstract Wall Art',
-            image: 'https://via.placeholder.com/300x200?text=Abstract+Wall+Art',
-            description: 'An abstract wall art piece that adds a bold touch to your room.',
-            link: 'https://www.wayfair.com/decor-wallart'
-        },
-        {
-            name: 'Rustic Coffee Table',
-            image: 'https://via.placeholder.com/300x200?text=Rustic+Coffee+Table',
-            description: 'A charming rustic coffee table with a wood finish.',
-            link: 'https://www.wayfair.com/furniture-coffee-table'
-        }
-    ];
-
-    products.forEach(product => {
-        const productCard = document.createElement('div');
-        productCard.classList.add('product-card');
-
-        productCard.innerHTML = `
-            <img src="${product.image}" alt="${product.name}">
-            <h3>${product.name}</h3>
-            <p>${product.description}</p>
-            <a href="${product.link}" target="_blank">View on retailer site</a>
-        `;
-
-        productList.appendChild(productCard);
-    });
-}
-
 function setView(view) {
     const productList = document.getElementById('productList');
     if (view === 'list') {
@@ -97,3 +53,47 @@ function setView(view) {
         productList.classList.add('gallery-view');
     }
 }
+
+
+function shareSite() {
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
+    const xUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent('Check out this amazing design recommendation site!')}`;
+
+    const shareContainer = document.getElementById('shareContainer');
+    shareContainer.innerHTML = `
+        <a href="${facebookUrl}" target="_blank">Share on Facebook</a><br>
+        <a href="${xUrl}" target="_blank">Share on X</a>
+    `;
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const shareContainer = document.createElement('div');
+    shareContainer.id = 'shareContainer';
+    shareContainer.style.textAlign = 'center';
+    shareContainer.style.marginTop = '20px';
+    document.body.appendChild(shareContainer);
+    
+
+    const shareButton = document.createElement('button');
+    shareButton.textContent = 'Share on Social Media';
+    shareButton.style.padding = '10px 20px';
+    shareButton.style.backgroundColor = '#4CAF50';
+    shareButton.style.color = 'white';
+    shareButton.style.border = 'none';
+    shareButton.style.borderRadius = '8px';
+    shareButton.style.cursor = 'pointer';
+    shareButton.style.fontSize = '1em';
+    shareButton.style.transition = 'background-color 0.3s ease';
+    shareButton.addEventListener('click', shareSite);
+
+    shareButton.onmouseover = () => {
+        shareButton.style.backgroundColor = '#45a049';
+    };
+
+    shareButton.onmouseout = () => {
+        shareButton.style.backgroundColor = '#4CAF50';
+    };
+
+    shareContainer.appendChild(shareButton);
+});
