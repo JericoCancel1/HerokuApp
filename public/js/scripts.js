@@ -13,22 +13,24 @@ function uploadImage() {
         };
         reader.readAsDataURL(file);
 
-        // Prepare to send the image to another URL
+        // Update status message
         uploadStatus.textContent = `We're analyzing "${file.name}" to find your perfect match...`;
 
         // Create FormData and append the file
         const formData = new FormData();
         formData.append('image', file);
 
-        // Use fetch to send the image
+        // Send the request
         fetch('https://flask-ai-api-91c1f2095b0f.herokuapp.com/api/upload', {
             method: 'POST',
             body: formData,
-            headers:{
-                'Accept': 'application/json'
-            }
         })
-        .then(response => response.blob())  // Adjust response handling based on your server's response format
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.blob();  // Adjust this based on server response (e.g., .json())
+        })
         .then(blob => {
             const returnedImageURL = URL.createObjectURL(blob);
             imagePreview.src = returnedImageURL;  // Show returned image in the imagePreview element
