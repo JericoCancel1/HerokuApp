@@ -125,17 +125,22 @@
             flex-wrap: wrap;
             justify-content: center;
         }
+        #productContainer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
         .product-card {
-            border: 1px solid #ddd;
-            padding: 20px;
-            border-radius: 15px;
-            margin: 15px;
-            background-color: #ffffff;
+            flex: 1 1 calc(20% - 20px); /* Adjusts for 5 cards per row */
+            max-width: 300px;
             text-align: center;
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            width: calc(100% - 40px);
-            max-width: 300px;
         }
         .product-card:hover {
             transform: translateY(-5px);
@@ -237,7 +242,6 @@
 
     <nav>
         <a href="#uploadSection">Upload Image</a>
-        <a href="#preferences">Set Preferences</a>
         <a href="#recommendations">View Suggestions</a>
         <a href="#collaborators">Collaborators</a> 
     </nav>
@@ -256,37 +260,7 @@
             </div>
         </section>
 
-        <section id="preferences">
-            <h2>Personalize Your Design Search</h2>
-            <p>Select your preferences to tailor the suggestions to your unique style:</p>
-            <form id="preferencesForm">
-                <label for="colorScheme">Preferred Color Scheme:</label>
-                <select id="colorScheme">
-                    <option value="neutral">Neutral</option>
-                    <option value="warm">Warm</option>
-                    <option value="cool">Cool</option>
-                    <option value="bold">Bold</option>
-                </select><br><br>
-
-                <label for="material">Preferred Material:</label>
-                <select id="material">
-                    <option value="wood">Wood</option>
-                    <option value="metal">Metal</option>
-                    <option value="fabric">Fabric</option>
-                    <option value="leather">Leather</option>
-                </select><br><br>
-
-                <label for="style">Preferred Style:</label>
-                <select id="style">
-                    <option value="modern">Modern</option>
-                    <option value="classic">Classic</option>
-                    <option value="minimalist">Minimalist</option>
-                    <option value="rustic">Rustic</option>
-                </select><br><br>
-
-                <button type="button" onclick="getRecommendations()">Generate</button>
-            </form>
-        </section>
+       
 
         <section id="recommendations">
             <h2>Your Personalized Recommendations</h2>
@@ -294,7 +268,7 @@
                 <button onclick="setView('gallery')">Gallery View</button>
                 <button onclick="setView('list')">List View</button>
             </div>
-            <div id="productList" class="gallery-view">
+            <div id="productContainer" class="gallery-view">
             </div>
         </section>
 
