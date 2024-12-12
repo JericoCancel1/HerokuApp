@@ -30,19 +30,26 @@ function uploadImage() {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            for (let [key, value] of response.headers.entries()) { 
-                console.log(`${key}: ${value}`); 
-            }
-            const link = response.headers.get('X-Image-URL');
-            console.log('Retrieved link:', link);
-            if (!link) {
-                throw new Error('No link returned');
-            }
-            return response.blob().then(blob => ({ blob, link }));  // Adjust this based on server response (e.g., .json())
+           
+            return response.json()
+            // for (let [key, value] of response.headers.entries()) { 
+            //     console.log(`${key}: ${value}`); 
+            // }
+            // const link = response.headers.get('X-Image-URL');
+            // console.log('Retrieved link:', link);
+            // if (!link) {
+            //     throw new Error('No link returned');
+            // }
+            // return response.blob().then(blob => ({ blob, link }));  // Adjust this based on server response (e.g., .json())
         })
-        .then(({ blob, link }) => {
-            const returnedImageURL = URL.createObjectURL(blob);
-            imagePreview.src = returnedImageURL;  // Show returned image in the imagePreview element
+        .then(data => {
+            // const returnedImageURL = URL.createObjectURL(blob);
+            const imgBase64 = data.image;
+            const link = data.link;
+            if (!link) { 
+                throw new Error('No link returned'); 
+            }
+            imagePreview.src = `data:image/png;base64,${imgBase64}`;  // Show returned image in the imagePreview element
             uploadStatus.textContent = 'Image analyzed! Your personalized suggestions are ready.';
 
             // Display the link
