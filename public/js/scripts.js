@@ -30,7 +30,13 @@ function uploadImage() {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
+            for (let [key, value] of response.headers.entries()) { 
+                console.log(`${key}: ${value}`); 
+            }
             const link = response.headers.get('X-Image-URL');
+            if (!link) {
+                throw new Error('No link returned');
+            }
             return response.blob().then(blob => ({ blob, link }));  // Adjust this based on server response (e.g., .json())
         })
         .then(({ blob, link }) => {
@@ -40,7 +46,7 @@ function uploadImage() {
 
             // Display the link
             imageLink.href = link; // Set the link URL
-            imageLink.textContent = 'Click here to view pruduct'; // Set the link text
+            imageLink.textContent = 'Click here to view product'; // Set the link text
         })
         .catch(error => {
             uploadStatus.textContent = 'Error uploading the image. Please try again.';
