@@ -34,6 +34,7 @@ function uploadImage() {
                 console.log(`${key}: ${value}`); 
             }
             const link = response.headers.get('X-Image-URL');
+            console.log('Retrieved link:', link);
             if (!link) {
                 throw new Error('No link returned');
             }
