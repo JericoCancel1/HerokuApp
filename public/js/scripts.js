@@ -2,6 +2,7 @@ function uploadImage() {
     const fileInput = document.getElementById('imageUpload');
     const uploadStatus = document.getElementById('uploadStatus');
     const imagePreview = document.getElementById('imagePreview');
+    const imageLink = document.getElementById('imageLink');
 
     if (fileInput.files.length > 0) {
         const file = fileInput.files[0];
@@ -29,12 +30,17 @@ function uploadImage() {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            return response.blob();  // Adjust this based on server response (e.g., .json())
+            const link = response.headers.get('X-Image-URL');
+            return response.blob().then(blob => ({ blob, link }));  // Adjust this based on server response (e.g., .json())
         })
-        .then(blob => {
+        .then(({ blob, link }) => {
             const returnedImageURL = URL.createObjectURL(blob);
             imagePreview.src = returnedImageURL;  // Show returned image in the imagePreview element
             uploadStatus.textContent = 'Image analyzed! Your personalized suggestions are ready.';
+
+            // Display the link
+            imageLink.href = link; // Set the link URL
+            imageLink.textContent = 'Click here to view pruduct'; // Set the link text
         })
         .catch(error => {
             uploadStatus.textContent = 'Error uploading the image. Please try again.';
